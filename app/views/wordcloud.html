@@ -1,0 +1,28 @@
+<form ng-submit="submit()">
+    <div class="well">
+        Min-conf: <b>{{sliderValue | json | number: 1}}</b> <slider ng-model="sliderValue" min="0.0" step="0.1" max="1" value="testOptions.value" class="mainButton"></slider>
+        </br>
+        Number:
+        <input ng-model="number" type="number"></input>
+    </div>
+    <div class="row">
+        <div class="col-lg-6" ng-show="show">
+            <textarea ng-model="input" name="text" class="form-control" rows="12" placeholder="Input-Text" style="display: block;"></textarea>
+            <a class="btn btn-default btn-danger pull-left mainButton" ng-click='empty()'><span class="glyphicon glyphicon-remove"></span> Clear</a>
+            <button type="submit" class="btn btn-default btn-primary pull-right mainButton"><i class="glyphicon glyphicon-send"></i> Send</button>
+        </div>
+        <div ng-class="collg">
+            <a ng-show="show" ng-click="show=false ; collg='col-lg-12'" class="btn btn-primary distanceButton"><span class="glyphicon glyphicon-chevron-left"></span></a>
+            <a ng-show="!show" ng-click="show=true ; collg='col-lg-6'" class="btn btn-primary distanceButton"><span class="glyphicon glyphicon-chevron-right"></span></a>
+            <a class="btn btn-primary distanceButton" ng-mousedown="csv.generate()" ng-href="{{ csv.link() }}" download="test.csv">Export to CSV</a>	
+         	<table ng-table="tableParams" class="table table-striped" export-csv="csv">
+				<tr ng-repeat="data in $data">
+				    <td data-title="'Wikiname'" sortable="'wikiname'">{{data.wikiname}}</td>
+				    <td data-title="'Linkprobability'" sortable="'linkProbability'">{{data.linkProbability | number: 3}}</td>
+				    <td data-title="'Commonness'" sortable="'commonness'">{{data.commonness | number: 3}}</td>
+				    <td data-title="'Score'" sortable="'score'">{{data.score | number: 3}}</td>
+				</tr>
+			</table>
+        </div>
+    </div>
+</form>

@@ -1,0 +1,35 @@
+<form ng-submit="submit()">
+    <div class="well">
+        Min-conf: <b>{{minconf | json | number: 1}}</b> <slider ng-model="minconf" min="0.0" step="0.1" max="1" value="testOptions.value" class="mainButton"></slider>
+        </br>
+        Min-linkprobability: <b>{{linkprob | json | number: 1}}</b> <slider ng-model="linkprob" min="0.0" step="0.1" max="1" value="testOptions.value" class="mainButton"></slider>
+        </br>
+        Number:
+        <input ng-model="number" type="number"></input>
+    </div>
+    <div class="row">
+        <div class="col-lg-6">
+            <textarea ng-model="input" name="text" class="form-control" rows="12" placeholder="Input-Text" style="display: block;"></textarea>
+            <a class="btn btn-default btn-danger pull-left mainButton" ng-click='empty()'><span class="glyphicon glyphicon-remove"></span> Clear</a>
+            <button type="submit" class="btn btn-default btn-primary pull-right mainButton"><i class="glyphicon glyphicon-send"></i> Send</button>
+        </div>
+        <div class="col-lg-6">
+		  <textarea ng-model="expextresults" class="form-control" placeholder="Expexted results" ng-list="&#10;" ng-trim="false" style="display: block;" required></textarea>
+ 		  <pre>{{ expextresults | json }}</pre>
+ 		  <p><b>Recall</b>: {{recall | number: 3}}</p>
+ 		  <p><b>Precision</b>: {{precision | number: 3}}</p>
+ 		  <p><b>F-measure</b>: {{f_measure | number: 3}}</p>
+         </div>
+        <div class="col-lg-12">
+            <a class="btn btn-primary distanceButton" ng-mousedown="csv.generate()" ng-href="{{ csv.link() }}" download="export.csv">Export to CSV</a>	
+        	<table ng-table="tableParams" class="table table-striped" export-csv="csv">
+				<tr ng-repeat="data in $data">
+				    <td data-title="'Wikiname'" sortable="'wikiname'">{{data.wikiname}}</td>
+				    <td data-title="'Linkprobability'" sortable="'linkProbability'">{{data.linkProbability | number: 3}}</td>
+				    <td data-title="'Commonness'" sortable="'commonness'">{{data.commonness | number: 3}}</td>
+				    <td data-title="'Score'" sortable="'score'">{{data.score | number: 3}}</td>
+				</tr>
+			</table>
+        </div>
+    </div>
+</form>
