@@ -14,6 +14,7 @@ angular.module('dexterWebclient')
         $scope.minconf = 0.5;
         $scope.linkprob = 0.5;
         $scope.number = 50;
+        $scope.minscore = 0.5;
 
         var data = {
             "spots": []
@@ -82,13 +83,14 @@ angular.module('dexterWebclient')
                     for (var i = 0; i < resultlenght; i++) {
                     	var wikiname = results.spots[i].wikiname;
                         var minlinkprob = results.spots[i].linkProbability;
+                        var score = results.spots[i].score;
                         
-                    	 if (minlinkprob >= $scope.linkprob) {
+                    	 if (minlinkprob >= $scope.linkprob && score >= $scope.minscore) {
                              cleandata.spots.push(results.spots[i]);
                          }
                         for (var j = 0; j < $scope.expextresults.length; j++) {
 
-                            if (wikiname === $scope.expextresults[j] && minlinkprob >= $scope.linkprob) {
+                            if (wikiname === $scope.expextresults[j] && minlinkprob >= $scope.linkprob && score >= $scope.minscore) {
                                 result.push(wikiname);
                             }
 
