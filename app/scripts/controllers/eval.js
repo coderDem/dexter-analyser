@@ -73,9 +73,11 @@ angular.module('dexterWebclient')
             $http.jsonp(url, config)
                 .success(function(results) {
                 	
-                	var cleandata = {
+                	var alldata = {
 			            "spots": []
 			        }; 
+
+                    var cleanData = [];
 
                     var resultlenght = results.spots.length;
 
@@ -86,7 +88,8 @@ angular.module('dexterWebclient')
                         var score = results.spots[i].score;
                         
                     	 if (minlinkprob >= $scope.linkprob && score >= $scope.minscore) {
-                             cleandata.spots.push(results.spots[i]);
+                             alldata.spots.push(results.spots[i]);
+                             cleanData.push(wikiname);
                          }
                         for (var j = 0; j < $scope.expextresults.length; j++) {
 
@@ -99,14 +102,15 @@ angular.module('dexterWebclient')
 
 
                     var resultNoDub = $scope.deleteDublicateValues(result).length;
+                    var cleanDataNoDub = $scope.deleteDublicateValues(cleanData).length;
 
                     $scope.recall = resultNoDub / $scope.expextresults.length; // recall formula
 
-                    $scope.precision = resultNoDub / cleandata.spots.length; // precision formula
+                    $scope.precision = resultNoDub / cleanDataNoDub; // precision formula
 
                     $scope.f_measure = 2 * (($scope.recall * $scope.precision) / ($scope.recall + $scope.precision));
                     
-                    data = cleandata;
+                    data = alldata;
                     $scope.tableParams.reload();
 
                 });
